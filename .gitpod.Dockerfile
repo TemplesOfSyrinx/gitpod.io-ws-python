@@ -1,2 +1,2 @@
 # syntax=docker/dockerfile:experimental
-FROM gitpod/workspace-base
+FROM gitpod/workspace-python
