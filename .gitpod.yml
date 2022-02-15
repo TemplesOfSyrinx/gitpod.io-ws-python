@@ -2,8 +2,23 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: echo 'init script' # runs during prebuild
-    command: echo 'start script'
+  # Check for pipenv command and configuration files
+  - init: |
+      command -v pipenv >/dev/null 2>&1 && {
+        if [ ! -f Pipfile ]; then
+          echo "No Pipfile found"
+          if [ ! -f requirements.txt ]; then
+            echo "No requirements.txt file found";
+          else
+            pipenv install -r requirements.txt;
+          fi
+        else
+          yes | pipenv install;
+        fi
+      }
+    # Check for PipFile
+    command: |
+      if [ ! -f Pipfile ]; then echo 'Run "pipenv --three"'; fi
 
 vscode:
   extensions:
